@@ -4,12 +4,12 @@ class Program
 {
     static void Main()
     {
-        Console.WriteLine("1. Word Frequency Analysis");
-        Console.WriteLine("2. Sentence Maker");
-        Console.WriteLine("3. Longest and Shortest Word Finder");
-        Console.WriteLine("4. Word Search");
-        Console.WriteLine("5. Palindrome Detector");
-        Console.WriteLine("6. Vowel/Consonant Counter");
+        Console.WriteLine("1. Prints Frequency of words in sentence");
+        Console.WriteLine("2. Make a sentence");
+        Console.WriteLine("3. Find long and short word in sentence");
+        Console.WriteLine("4. Search words in your Sentence");
+        Console.WriteLine("5. Detects Palindrome in sentence");
+        Console.WriteLine("6. Counts Vowel and Consonant ");
         Console.Write("Enter your choice (1-6): ");
 
         int choice = int.Parse(Console.ReadLine());
@@ -19,7 +19,7 @@ class Program
             case 1:
                 Console.WriteLine("Enter a sentence:");
                 string sentence = Console.ReadLine();
-                PrintWordFrequencies(sentence);
+                WordFrequencies(sentence);
                 break;
 
             case 2:
@@ -62,7 +62,7 @@ class Program
         Console.Read();
     }
 
-    static void PrintWordFrequencies(string sentence)
+    static void WordFrequencies(string sentence)
     {
         string[] words = SplitSentenceIntoWords(sentence);
         int[] frequencies = new int[words.Length];
