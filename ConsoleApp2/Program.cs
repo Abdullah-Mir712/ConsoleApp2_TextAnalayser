@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 class Program
 {
     static void Main()
@@ -11,6 +11,7 @@ class Program
         Console.WriteLine("5. Detects Palindrome in sentence");
         Console.WriteLine("6. Counts Vowel and Consonant ");
         Console.Write("Enter your choice (1-6): ");
+        
 
         int choice = int.Parse(Console.ReadLine());
 
@@ -64,68 +65,35 @@ class Program
 
     static void WordFrequencies(string sentence)
     {
-        string[] words = SplitSentenceIntoWords(sentence);
-        int[] frequencies = new int[words.Length];
-        string[] uniqueWords = new string[words.Length];
-        int uniqueWordCount = 0;
 
-        for (int i = 0; i < words.Length; i++)
+
+        string[] words = sentence.Split(' '); ;
+
+       
+        Dictionary<string, int> wordFrequencies = new Dictionary<string, int>();
+
+        foreach (string word in words)
         {
-            bool isDuplicate = false;
-            for (int j = 0; j < uniqueWordCount; j++)
+            if (wordFrequencies.ContainsKey(word))
             {
-                if (words[i] == uniqueWords[j])
-                {
-                    isDuplicate = true;
-                    frequencies[j]++;
-                    break;
-                }
+                wordFrequencies[word]++;
             }
-
-            if (!isDuplicate)
+            else
             {
-                uniqueWords[uniqueWordCount] = words[i];
-                frequencies[uniqueWordCount] = 1;
-                uniqueWordCount++;
+                wordFrequencies[word] = 1;
             }
         }
 
         Console.WriteLine("\nWord Frequency:");
-        for (int i = 0; i < uniqueWordCount; i++)
+        foreach (KeyValuePair<string, int> pair in wordFrequencies)
         {
-            Console.WriteLine($"\"{uniqueWords[i]}\": {frequencies[i]}");
+            Console.WriteLine($"\"{pair.Key}\": {pair.Value}");
         }
+        
+
     }
 
-    static string[] SplitSentenceIntoWords(string sentence)
-    {
-        int wordCount = 1;
-        for (int i = 0; i < sentence.Length; i++)
-        {
-            if (sentence[i] == ' ')
-            {
-                wordCount++;
-            }
-        }
-
-        string[] words = new string[wordCount];
-        int wordIndex = 0;
-        int startIndex = 0;
-
-        for (int i = 0; i < sentence.Length; i++)
-        {
-            if (sentence[i] == ' ')
-            {
-                words[wordIndex] = sentence.Substring(startIndex, i - startIndex);
-                wordIndex++;
-                startIndex = i + 1;
-            }
-        }
-
-        words[wordIndex] = sentence.Substring(startIndex);
-
-        return words;
-    }
+    
 
     static void GenerateSentences(int n)
     {
@@ -154,7 +122,7 @@ class Program
 
     static void FindLongestAndShortestWords(string sentence)
     {
-        string[] words = SplitSentenceIntoWords(sentence);
+        string[] words = sentence.Split(' ');
         string longestWord = "";
         string shortestWord = words[0];
 
@@ -177,7 +145,7 @@ class Program
 
     static void SearchWord(string sentence, string word)
     {
-        string[] words = SplitSentenceIntoWords(sentence);
+        string[] words = sentence.Split();
         int wordCount = 0;
 
         for (int i = 0; i < words.Length; i++)
@@ -194,7 +162,7 @@ class Program
 
     static void DetectPalindromes(string sentence)
     {
-        string[] words = SplitSentenceIntoWords(sentence);
+        string[] words = sentence.Split(' ');
 
         Console.WriteLine("\nPalindromes in the sentence:");
         foreach (string word in words)
@@ -210,10 +178,12 @@ class Program
     {
         int left = 0;
         int right = word.Length - 1;
+        char leftChar = char.ToLower(word[left]);
+        char rightChar = char.ToLower(word[right]);
 
         while (left < right)
         {
-            if (char.ToLower(word[left]) != char.ToLower(word[right]))
+            if (leftChar != rightChar)
             {
                 return false;
             }
@@ -227,22 +197,20 @@ class Program
 
     static void CountVowelsAndConsonants(string sentence)
     {
-        string[] words = SplitSentenceIntoWords(sentence);
+        string[] words = sentence.Split(' ');
 
         Console.WriteLine("\nVowels and Consonants count:");
 
-        for (int i = 0; i < words.Length; i++)
+        foreach (string word in words)
         {
             int wordVowelCount = 0;
             int wordConsonantCount = 0;
 
-            for (int j = 0; j < words[i].Length; j++)
+            foreach (char ch in word.ToLower())
             {
-                char ch = char.ToLower(words[i][j]);
-
-                if (ch >= 'a' && ch <= 'z')
+                if (char.IsLetter(ch))
                 {
-                    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
+                    if (ch == 'a' || ch == 'e' || ch=='i' || ch=='o' || ch=='u')
                     {
                         wordVowelCount++;
                     }
@@ -253,7 +221,7 @@ class Program
                 }
             }
 
-            Console.WriteLine($"\"{words[i]}\": {wordVowelCount} vowel(s) and {wordConsonantCount} consonant(s)");
+            Console.WriteLine($"\"{word}\": {wordVowelCount} vowel(s) and {wordConsonantCount} consonant(s)");
         }
     }
 
